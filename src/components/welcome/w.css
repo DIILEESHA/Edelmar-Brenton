@@ -1,0 +1,82 @@
+.welcome{
+    background-image: url("../../assets/wed_back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+    display: flex;flex-direction: column;
+    align-items: center;justify-content: center;
+    padding: 80px ;
+}
+
+
+
+.logo_png{
+    width: 400px;
+    margin-top: -80px;
+    margin-bottom: -60px;
+}
+
+
+
+.w_p{
+    font-family: "eb";
+    font-size: 20px;
+    width: 50%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+
+/* ===== Medium devices / laptops / tablets ===== */
+@media (max-width: 1024px) {
+    .welcome {
+        padding: 60px 40px;
+    }
+
+    .logo_png {
+        width: 300px;
+        margin-top: -60px;
+        margin-bottom: -40px;
+    }
+
+    .w_p {
+        font-size: 18px;
+        width: 60%;
+    }
+}
+
+/* ===== Small devices / tablets in portrait / large phones ===== */
+@media (max-width: 768px) {
+    .welcome {
+        padding: 50px 30px;
+    }
+
+    .logo_png {
+        width: 250px;
+        margin-top: -50px;
+        margin-bottom: -30px;
+    }
+
+    .w_p {
+        font-size: 16px;
+        width: 70%;
+    }
+}
+
+/* ===== Extra small devices / mobile phones ===== */
+@media (max-width: 480px) {
+    .welcome {
+        padding: 40px 20px;
+    }
+
+    .logo_png {
+        width: 200px;
+        margin-top: -40px;
+        margin-bottom: -20px;
+    }
+
+    .w_p {
+        font-size: 14px;
+        width: 90%;
+    }
+}

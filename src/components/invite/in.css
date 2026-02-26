@@ -1,0 +1,304 @@
+.invite {
+  background-color: #FFFFF0
+}
+.invite_msg{
+  margin-bottom: 40px;
+}
+.nvite_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 80px 100px;
+  gap: 30px;
+}
+
+.hukaa{
+display: grid;
+grid-template-columns: 1fr!important;
+width: 100%;
+}
+
+.in_img {
+  width: 100%;
+  height: 90vh;
+  padding: 10px;
+  border: 1px solid #333;
+  object-fit: cover;
+}
+.in_sub {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+.top_invite_text {
+  font-family: "pio";
+  font-size: 70px;
+  color: #0F3D2E;
+  text-align: center;
+  margin-bottom: 30px;
+  /* font-weight: 400; */
+}
+
+.faq_ul {
+  text-align: left;
+  margin: 40px 20px 0px 20px;
+  color: #0F3D2E;
+
+}
+
+.faq_li {
+  font-family: "bodini";
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.ans {
+  font-family: "eb";
+  font-size: 17px;
+  line-height: 150%;
+}
+.top_invite_textS {
+  font-size: 50px;
+  font-weight: 400;
+  font-family: "eb";
+  color: #0F3D2E;
+
+}
+
+.bible_verse {
+  font-family: "eb";
+  width: 80%;
+  color: #333;
+  font-size: 20px;
+}
+
+.details_section {
+  display: grid;
+  display: flex;
+  grid-template-columns: 1fr 1fr;
+  /* display: flex; */
+  width: 100%;
+}
+
+.maj {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.detail_item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  justify-content: center;
+}
+.nb {
+  font-family: "bodini";
+  color: #333;
+  color: #0F3D2E;
+
+}
+
+.in_time {
+  font-family: "eb";
+  font-size: 30px;
+  color: #0F3D2E;
+}
+
+.aa {
+  font-family: "eb";
+  color: #0F3D2E;
+
+}
+
+.address {
+  color: #0F3D2E;
+  font-family: "eb";
+  width: 70%;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.jo {
+  width: 50px;
+}
+
+.hep {
+  color: #000;
+  color: #0F3D2E;
+text-decoration: underline;
+  width: 100%;
+}
+
+.hayyo {
+  object-position: center 90% !important;
+  object-fit: cover !important;
+  height: 100%;
+}
+
+/* Base styles for large screens */
+
+/* Extra large devices (desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .nvite_grid {
+    padding: 80px 100px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .top_invite_text {
+    font-size: 70px;
+  }
+  .in_img {
+    height: 90vh;
+  }
+}
+
+/* Large devices (laptops, 1024px and up) */
+@media (min-width: 1024px) and (max-width: 1199.98px) {
+  .nvite_grid {
+    padding: 70px 80px;
+    gap: 25px;
+  }
+  .top_invite_text {
+    font-size: 60px;
+    margin-bottom: 25px;
+  }
+  .in_img {
+    height: 80vh;
+  }
+  .bible_verse {
+    width: 85%;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 1023.98px) {
+  .nvite_grid {
+    grid-template-columns: 1fr;
+    padding: 60px 40px;
+    gap: 40px;
+  }
+  .top_invite_text {
+    font-size: 48px;
+    margin-bottom: 20px;
+  }
+  .top_invite_textS {
+    font-size: 40px;
+  }
+  .in_img {
+    height: 60vh;
+  }
+  .in_sub {
+    padding: 40px 20px;
+  }
+  .faq_ul {
+    margin: 30px 15px 0 15px;
+  }
+  .bible_verse {
+    width: 90%;
+    font-size: 18px;
+  }
+  .address {
+    width: 85%;
+  }
+  .details_section {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .nvite_grid {
+    padding: 50px 30px;
+    gap: 30px;
+  }
+  .top_invite_text {
+    font-size: 36px;
+  }
+  .top_invite_textS {
+    font-size: 32px;
+  }
+  .in_img {
+    height: 50vh;
+  }
+  .in_time {
+    font-size: 26px;
+  }
+  .ans {
+    font-size: 16px;
+  }
+  .faq_ul {
+    margin: 25px 10px 0 10px;
+  }
+  .bible_verse {
+    width: 95%;
+    font-size: 17px;
+  }
+  .address {
+    width: 90%;
+    font-size: 16px;
+  }
+}
+
+/* Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .nvite_grid {
+    grid-template-columns: 1fr;
+    padding: 40px 20px;
+    gap: 15px;
+  }
+
+  .iisi{
+  width: 95%!important;
+}
+  .top_invite_text {
+    font-size: 48px;
+    margin-bottom: 15px;
+  }
+  .top_invite_textS {
+    font-size: 24px;
+  }
+  .in_img {
+    height: 60vh;
+  }
+  .in_sub {
+    padding: 0px 15px;
+  }
+  .in_time {
+    font-size: 22px;
+  }
+  .ans {
+    font-size: 15px;
+    line-height: 140%;
+  }
+  .faq_li {
+    font-size: 14px;
+  }
+  .faq_ul {
+    margin: 20px 8px 0 8px;
+  }
+  .bible_verse {
+    width: 100%;
+    font-size: 16px;
+    line-height: 140%;
+  }
+  .address {
+    width: 100%;
+    font-size: 15px;
+    margin: 8px auto;
+  }
+  .details_section {
+    flex-direction: column;
+    gap: 10px;
+  }
+  .jo {
+    width: 40px;
+  }
+  .hep {
+    font-size: 14px;
+  }
+}

@@ -1,0 +1,158 @@
+.story{
+    background-image: url("../../assets/us6.jpg");
+    background-size: cover;
+    background-position: center center;
+    display: flex;flex-direction: column;
+    padding: 80px 0;
+    position: relative;
+    align-items: center;justify-content: center;
+}
+.story::after {
+  background-color: #2b24247b;
+  position: absolute;
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+
+}
+.story_rec{
+background-image: url("../../assets/white.jpg");
+z-index: 1;
+background-repeat: no-repeat;
+background-position: center center;
+background-size: cover;
+max-width: 700px;
+padding: 40px;
+position: relative;
+margin: 10px auto;
+margin-top: 100px;
+}
+
+.carto{
+    position: absolute;
+    right: 0;
+    left: 0;
+    margin: 0 auto;
+    display: flex;align-items: center;justify-content: center;
+    top: -150px;
+}
+
+.c_img{
+    width: 200px;
+}
+.our_title{
+    font-family: "pio";
+    margin-top: 20px;
+  color: #0F3D2E;
+
+    font-size: 100px;
+    text-align: center;
+}
+
+.story_para{
+    font-family: "eb";
+    text-align: center;
+    line-height: 150%;
+    font-size: 20px;
+}
+
+
+
+/* ===== Default / Large Devices ===== */
+/* Already handled by your current CSS */
+
+/* ===== Medium Devices / Laptops / Tablets ===== */
+@media (max-width: 1024px) {
+  .story {
+      padding: 60px 0;
+  }
+
+  .story_rec {
+      max-width: 600px;
+      padding: 35px;
+      margin-top: 80px;
+  }
+
+  .carto {
+      top: -120px;
+  }
+
+  .c_img {
+      width: 180px;
+  }
+
+  .our_title {
+      font-size: 70px;
+      margin-top: 15px;
+  }
+
+  .story_para {
+      font-size: 18px;
+      line-height: 145%;
+  }
+}
+
+/* ===== Small Devices / Tablets in portrait / Large Phones ===== */
+@media (max-width: 768px) {
+  .story {
+      padding: 50px 0;
+  }
+
+  .story_rec {
+      max-width: 500px;
+      padding: 30px;
+      margin-top: 70px;
+  }
+
+  .carto {
+      top: -100px;
+  }
+
+  .c_img {
+      width: 150px;
+  }
+
+  .our_title {
+      font-size: 50px;
+      margin-top: 10px;
+  }
+
+  .story_para {
+      font-size: 16px;
+      line-height: 140%;
+  }
+}
+
+/* ===== Extra Small Devices / Mobile Phones ===== */
+@media (max-width: 480px) {
+  .story {
+      padding: 40px 0;
+  }
+
+  .story_rec {
+      max-width: 90%;
+      padding: 20px;
+      margin-top: 60px;
+  }
+
+  .carto {
+      top: -80px;
+  }
+
+  .c_img {
+      width: 120px;
+  }
+
+  .our_title {
+      font-size: 35px;
+      margin-top: 30px;
+  }
+
+  .story_para {
+      font-size: 14px;
+      line-height: 135%;
+  }
+}

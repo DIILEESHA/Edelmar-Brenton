@@ -1,0 +1,232 @@
+/* ---------------- FONTS ---------------- */
+@font-face {
+  font-family: "bodini";
+  src: url("../public/fonts/BodoniFLF-Roman.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "eb";
+  src: url("../public/fonts/EBGaramond-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ed";
+  src: url("../public/fonts/Edwardian Script ITC Regular.ttf")
+    format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "pio";
+  src: url("../public/fonts/PinyonScript-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* ---------------- RSVP SECTION ---------------- */
+.rsvp {
+  background-image: url("../../assets/us.jpg");
+  min-height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  padding-bottom: 100px;
+}
+.puy {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.pok {
+  /* border: 1px solid red; */
+  /* width: 100%; */
+}
+
+.q {
+  margin-bottom: 10px;
+}
+
+.form_inputs {
+  width: 100%;
+}
+/* Overlay */
+.rsvp::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.55);
+  z-index: 0;
+}
+
+/* ---------------- CONTENT LAYER ---------------- */
+.rsvp > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ---------------- BREADCRUMB ---------------- */
+.breadcrumb {
+  padding: 40px 60px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  color: #fff;
+}
+.error {
+  color: #ffb3b3;
+  font-size: 14px;
+  font-family: "eb";
+  font-weight: 600;
+  margin-top: 4px;
+  display: block;
+}
+
+.ro {
+  font-family: "eb";
+  font-size: 14px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ---------------- TITLE & TEXT ---------------- */
+.rs_title {
+  font-family: "pio";
+  font-size: 60px;
+  color: #fff;
+  text-align: center;
+  margin-top: 40px;
+}
+
+.rs_para {
+  max-width: 650px;
+  margin: 20px auto 50px;
+  text-align: center;
+  font-family: "eb";
+  font-size: 16px;
+  line-height: 1.7;
+  color: #eaeaea;
+}
+
+/* ---------------- FORM ---------------- */
+.rsvp_form_section {
+  display: flex;
+  justify-content: center;
+}
+
+.rs_form {
+  background-color: rgba(255, 255, 255, 0.95);
+  padding: 50px 60px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  margin: 10px auto;
+  width: 100%;
+  max-width: 600px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+}
+
+.form_input_section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 22px;
+}
+
+.form_label {
+  font-family: "bodini";
+  font-family: "bodini";
+  font-weight: 600;
+  font-size: 18px;
+  color: #333;
+}
+
+.form_input,
+.form_inputs,
+.form_textarea {
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-family: "bodini";
+  font-size: 17px;
+}
+
+.form_input:focus,
+.form_inputs:focus,
+.form_textarea:focus {
+  outline: none;
+  border-color: #b39b6b;
+}
+
+/* ---------------- BUTTON ---------------- */
+.form_btn {
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 30px;
+  border: none;
+  background-color: #000;
+  color: #fff;
+  font-family: "eb";
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.form_btn:hover {
+  background-color: #b39b6b;
+  color: #000;
+}
+
+/* ---------------- MEDIA QUERIES ---------------- */
+
+/* Tablet */
+@media (max-width: 1024px) {
+  .rs_title {
+    font-size: 48px;
+  }
+
+  .rs_form {
+    padding: 40px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  .breadcrumb {
+    padding: 30px;
+  }
+
+  .rs_title {
+    font-size: 40px;
+  }
+
+  .rs_para {
+    padding: 0 20px;
+    font-size: 15px;
+  }
+
+  .rs_form {
+    width: 90%;
+    border-radius: 10px;
+    padding: 35px 25px;
+  }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+  .rs_title {
+    font-size: 32px;
+  }
+
+  .form_btn {
+    font-size: 13px;
+  }
+}

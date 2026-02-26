@@ -1,0 +1,366 @@
+.sc {
+  background-color: #fff;
+  background-color: #f3f3ed9d;
+  background-color: #fffff0 !important;
+
+  padding: 80px 0;
+}
+
+.mosta{
+  text-align: end;
+  font-family: "eb";
+
+  color: #013314;
+}
+
+
+.habs{
+  color: #013314;
+  text-decoration: underline;
+  font-family: "eb";
+
+}
+.cols {
+  position: relative;
+  background-image: url("../../assets/wed_back.jpg");
+}
+
+
+
+.joms {
+  color: #333;
+  position: relative;
+  z-index: 1;
+  margin: 10px auto;
+  text-align: center;
+  width: 60%;
+  font-size: 18px;
+  line-height: 150%;
+}
+
+.masa{
+  color: #013314!important;
+  text-align: center;
+  font-size: 80px!important;
+  font-family: "pio";
+}
+.hotel-info {
+  width: 100%;
+  /* background-color: #013314; */
+  /* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid #706d6d6c;
+}
+
+.subaru {
+  padding-top: 80px;
+}
+
+.card {
+  margin: 15px;
+}
+.hotel_imgs {
+  /* background-color: #013314; */
+  width: 100%;
+  position: relative;
+  border-radius: 0 !important;
+  height: 40vh;
+  object-fit: cover;
+  z-index: 1;
+}
+.gosa {
+  gap: 20px;
+  padding: 20px 100px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+.kusiya {
+  text-align: center;
+  width: 50%;
+  margin: 10px auto;
+}
+.hpo {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hopes {
+  position: relative;
+  width: 100%;
+}
+.balki {
+  background-color: #1a1a1ac2;
+  width: 100%;
+  cursor: pointer;
+position: relative;
+  padding: 15px;
+  margin-top: 10px;
+  color: #ffff;
+  text-decoration: none;
+}
+
+
+
+.posv{
+  color: #013314!important;
+  font-size: 20px;
+}
+
+.ppp{
+  z-index: 10!important;
+  display: block;
+  position: relative!important;
+}
+
+.kara{
+  position: relative;
+  z-index: 10;
+}
+
+
+.hotel-info:nth-child(5){
+  grid-column:2/4;
+}
+.bosi {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  position: relative;
+}
+.uu {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+.ab_titles {
+  /* position: absolute; */
+  bottom: 100px;
+  left: 130px;
+  font-family: "bodini";
+  font-size: 11px;
+  border: 5px solid #fff;
+  padding: 15px;
+  border-radius: 50px;
+  background-color: #f7e7ce;
+
+  color: #333;
+}
+.doha {
+  border: 4px solid #1a1a1a;
+  border-radius: 50px;
+}
+.sc_grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+
+.hab {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.ui {
+  margin-bottom: 0px;
+}
+
+.r {
+  text-align: left;
+  width: 100%;
+}
+
+.tops {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  /* margin-top: -50px; */
+  justify-content: center;
+  /* border: 1px solid #000; */
+  position: relative;
+}
+
+.text_sc {
+  font-family: "eb";
+  font-weight: 200;
+  font-size: 60px;
+  color: #013314;
+}
+
+.sc_sub {
+  display: flex;
+  /* align-items: center; */
+  /* justify-content: center; */
+}
+.text_sc_p {
+  font-family: "pio";
+  color: #013314;
+
+  font-size: 70px;
+  font-weight: 400;
+}
+
+.hope {
+  /* position: absolute; */
+  /* inset: 0; */
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: column;
+}
+.hopes {
+  /* position: absolute; */
+  /* inset: 0; */
+  display: flex;
+  /* align-items: flex-start; */
+  justify-content: center;
+  flex-direction: column;
+}
+.gio {
+  display: flex;
+  align-items: flex-end !important;
+  width: 100%;
+  justify-content: center;
+}
+
+.yy {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  width: 100%;
+  text-align: right;
+}
+/* ADD TEXT RESPONSIVE TO YOUR EXISTING CODE - Inside your media queries */
+
+@media (max-width: 1024px) {
+  .sc_grid,.muda,.gio{
+    display: flex;
+    align-items: center!important;
+    justify-content: center;
+    flex-direction: column;
+  }
+  .muda {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column-reverse!important;
+  }
+  .hope,
+  .tops {
+ justify-content: center;
+ align-items: center;
+  }
+.habs,.mosta,.aa{
+  width: 100%;
+  text-align: center;
+}
+  /* TEXT RESPONSIVE ADDED */
+  .text_sc {
+    font-size: 48px !important;
+    text-align: center;
+  }
+  .text_sc_p {
+    font-size: 56px !important;
+    text-align: center;
+  }
+
+.detail_item{
+  align-items: center;
+}
+}
+
+@media (max-width: 824px) {
+  .sc_grid,
+  .gosa {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .gosa {
+    padding: 20px;
+  }
+  .subaru {
+    padding-top: 50px;
+  }
+
+  .hotel_imgs{
+    height: 30vh;
+  }
+  .joms {
+    width: 90%;
+    font-size: 13px;
+  }
+  .posv{
+    font-size: 15px;
+  }
+  .sc {
+    padding: 40px 20px;
+  }
+
+  .hope,
+  .tops {
+    align-items: center;
+    justify-content:center;
+  }
+
+  .sc_sub {
+    width: 100%;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hab,
+  .mo {
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ui {
+    margin-bottom: 30px;
+  }
+
+  /* TEXT RESPONSIVE ADDED */
+  .text_sc {
+    font-size: 42px !important;
+  }
+  .text_sc_p {
+    font-size: 48px !important;
+  }
+
+  .masa{
+    font-size: 40px!important;
+    padding-top: 0!important;
+  }
+}
+
+/* NEW - SMALLER DEVICES ADDED TO YOUR CODE */
+@media (max-width: 575px) {
+  .text_sc {
+    font-size: 36px !important;
+  }
+  .text_sc_p {
+    font-size: 42px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .text_sc {
+    font-size: 32px !important;
+  }
+  .text_sc_p {
+    font-size: 38px !important;
+  }
+}

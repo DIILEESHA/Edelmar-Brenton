@@ -1,0 +1,45 @@
+.gallery_container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  text-align: center;
+  background-image: url("../../assets/us2.jpg");
+  background-position: center 60%;
+  background-size: cover;
+  padding: 40px 20px;
+}
+
+.jjjj{
+    position: relative;
+    z-index: 1;
+}
+.gallery_container::after {
+  width: 100%;
+
+  background-color: #20202081;
+  height: 100%;
+  content: "";
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+}
+.gallery_title {
+  font-family: "bodini";
+
+  font-size: 62px;
+  letter-spacing: 2px;
+  color: #fff; /* champagne gold */
+  margin-bottom: 14px;
+}
+
+.gallery_note {
+  font-size: 18px;
+  max-width: 620px;
+  color: #fff;
+  line-height: 1.2;
+}

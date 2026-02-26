@@ -1,0 +1,225 @@
+.vendor{
+  background-color: #FFFFF0;
+  padding: 100px 80px;
+
+}
+
+
+.vendor_title{
+    font-family: "ed";
+     color: #0F3D2E;
+text-align: center;
+margin-bottom: 20px;
+font-size: 70px;
+}
+
+
+.sm_vendor_p{
+    font-family: "eb";
+    font-size: 20px;
+    width: 60%;
+    margin: 10px auto;
+    margin-bottom: 30px;
+}
+
+.hol{
+    display: flex;align-items: center;justify-content: center;
+}
+
+.cam_img{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    padding: 5px;
+    border: 2px solid #1a1a1a;
+    margin-bottom: 20px;
+}
+
+
+.sm_vendor_title{
+    text-align: center;
+    font-size: 20px;
+    font-family: "eb";
+}
+
+
+
+
+.panda{
+    background-image: url("../../assets/wed_back.jpg");
+    padding:100px 80px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+}
+
+.panda_grid{
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    max-width: 1300px;
+    margin: 10px auto;
+    gap: 100px;
+    position: relative;
+    z-index: 10;
+}
+
+
+.kolla{
+
+    /* padding: 1px solid #333; */
+    /* padding: 100px!important; */
+}
+
+.panda_img{
+    width: 100%;
+    height: 60vh;
+}
+
+
+.aha{
+    text-align: left!important;
+}
+
+
+.sax{
+    width: 100%;
+}
+
+
+.vendor_btn{
+    background-color: #1a1a1a;
+    padding: 20px 30px;
+    color: #fff;
+}
+
+.maha{
+    display: flex;flex-direction: column;
+    align-items: center;justify-content: center;
+}
+
+
+.dj{
+    background-image: none;
+  background-color: #FFFFF0!important;
+
+}
+
+
+
+/* ===== Medium Devices / Laptops / Tablets ===== */
+@media (max-width: 1024px) {
+  .vendor {
+    padding: 80px 40px;
+  }
+
+  .vendor_title {
+    font-size: 55px;
+  }
+
+  .sm_vendor_p {
+    width: 70%;
+    font-size: 18px;
+    margin-bottom: 25px;
+  }
+
+  .panda {
+    padding: 80px 40px;
+  }
+
+  .panda_grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+  }
+
+  .panda_img {
+    height: 50vh;
+  }
+
+  .vendor_btn {
+    padding: 18px 28px;
+  }
+}
+
+/* ===== Small Devices / Tablets Portrait / Large Phones ===== */
+@media (max-width: 768px) {
+  .vendor {
+    padding: 60px 20px;
+  }
+
+  .vendor_title {
+    font-size: 45px;
+  }
+
+  .sm_vendor_p {
+    width: 80%;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .panda {
+    padding: 60px 20px;
+  }
+
+  .panda_grid {
+    grid-template-columns: 1fr; /* stack vertically on small screens */
+    gap: 40px;
+  }
+
+  .panda_img {
+    height: 40vh;
+  }
+
+  .vendor_btn {
+    padding: 16px 25px;
+    font-size: 14px;
+  }
+}
+
+/* ===== Extra Small Devices / Mobile Phones ===== */
+@media (max-width: 480px) {
+  .vendor {
+    padding: 50px 10px;
+  }
+
+  .vendor_title {
+    font-size: 35px;
+  }
+
+  .sm_vendor_p {
+    width: 90%;
+    font-size: 14px;
+    margin-bottom: 15px;
+    text-align: center!important
+  }
+
+  .panda {
+    padding: 50px 10px;
+  }
+
+  .panda_grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+.sola{
+    display: flex;flex-direction: column-reverse;
+}
+  .panda_img {
+    height: 50vh;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  .cam_img {
+    width: 80px;
+    height: 80px;
+  }
+
+  .sm_vendor_title {
+    font-size: 16px;
+  }
+
+  .vendor_btn {
+    padding: 14px 20px;
+    font-size: 12px;
+  }
+}
