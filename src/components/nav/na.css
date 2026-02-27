@@ -44,9 +44,8 @@
   position: absolute;
   left: 0;
   bottom: 0;
-  width: 0%;
-  height: 2px; /* thickness of underline */
-  background-color: #fff; /* underline color */
+  width: 0%; 
+  background-color: #fff; 
   transition: width 0.4s ease;
 }
 

@@ -5,7 +5,6 @@ import {
   Table,
   Tag,
   Select,
-  Badge,
   Card,
   Row,
   Col,
@@ -13,6 +12,7 @@ import {
   Popconfirm,
   Modal,
 } from "antd";
+
 import { db } from "./firebaseConfig";
 import {
   collection,
@@ -22,58 +22,48 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
+
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const CEREMONY_NAMES = {
-  ceremonyOne: "Sikh Ceremony",
-  ceremonyTwo: "Orthodox Ceremony",
-};
+/* ================= FORMAT GUESTS ================= */
 
-/* ================= SAFE GUEST FORMATTER ================= */
 const formatGuests = (guests) => {
   if (!guests || guests.length === 0) return "-";
 
   return guests
-    .map((g) => {
-      // If guest is string (current RSVP form)
-      if (typeof g === "string") {
-        return g.trim() || "Unnamed Guest";
-      }
-
-      // If guest is object (future upgrade support)
-      if (typeof g === "object") {
-        const first = g?.firstName?.trim() || "";
-        const last = g?.lastName?.trim() || "";
-        const full = `${first} ${last}`.trim();
-        return full || "Unnamed Guest";
-      }
-
-      return "Unnamed Guest";
-    })
+    .map((g) => (typeof g === "string" ? g : "Unnamed"))
     .join(", ");
 };
+
+/* ================= ADMIN DASHBOARD ================= */
 
 const AdminDashboard = () => {
   const [isAuth, setIsAuth] = useState(false);
   const [password, setPassword] = useState("");
+
   const [rsvps, setRsvps] = useState([]);
+
   const [filter, setFilter] = useState("all");
   const [search, setSearch] = useState("");
+
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRsvp, setSelectedRsvp] = useState(null);
 
   /* ================= FETCH RSVPS ================= */
+
   const fetchRsvps = async () => {
     try {
       const q = query(collection(db, "rsvps"), orderBy("createdAt", "desc"));
+
       const snapshot = await getDocs(q);
 
       const data = snapshot.docs.map((docSnap) => {
         const d = docSnap.data();
+
         return {
           id: docSnap.id,
-          ceremonies: d.ceremonies || {},
+          ceremony: d.ceremony || {},
           message: d.message || "-",
           createdAt: d.createdAt || null,
         };
@@ -82,7 +72,7 @@ const AdminDashboard = () => {
       setRsvps(data);
     } catch (error) {
       message.error("Failed to fetch RSVPs");
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -91,144 +81,153 @@ const AdminDashboard = () => {
   }, [isAuth]);
 
   /* ================= LOGIN ================= */
+
   const handleLogin = () => {
-    if (password === "jm26") {
+    if (password === "2000") {
       setIsAuth(true);
-      message.success("Logged in successfully");
+      message.success("Login successful");
     } else {
-      message.error("Incorrect password");
+      message.error("Wrong password");
     }
   };
 
   /* ================= DELETE ================= */
+
   const handleDelete = async (id) => {
     try {
       await deleteDoc(doc(db, "rsvps", id));
-      message.success("RSVP deleted successfully");
+      message.success("Deleted successfully");
       fetchRsvps();
     } catch (error) {
-      message.error("Failed to delete RSVP");
-      console.error(error);
+      message.error("Delete failed");
     }
   };
 
-  /* ================= MODAL ================= */
+  /* ================= VIEW DETAILS ================= */
+
   const handleViewDetails = (rsvp) => {
     setSelectedRsvp(rsvp);
     setModalVisible(true);
   };
 
-  const handleModalClose = () => {
-    setSelectedRsvp(null);
-    setModalVisible(false);
-  };
+  /* ================= EXPORT EXCEL ================= */
 
-  /* ================= EXCEL EXPORT ================= */
   const exportExcel = () => {
-    const wsData = [];
+    const wsData = rsvps.map((rsvp) => ({
+      Attending:
+        rsvp.ceremony.attending === "yes" ? "Yes" : "No",
 
-    rsvps.forEach((rsvp) => {
-      Object.keys(rsvp.ceremonies).forEach((cerKey) => {
-        const cer = rsvp.ceremonies[cerKey];
+      Guests: formatGuests(rsvp.ceremony.guests),
 
-        wsData.push({
-          Ceremony: CEREMONY_NAMES[cerKey] || cerKey,
-          Attending: cer.attending === "yes" ? "Yes" : "No",
-          Guests: formatGuests(cer.guests),
-          GuestCount: cer.guests?.length || 0,
-          Message: rsvp.message,
-        });
-      });
-    });
+      GuestCount:
+        rsvp.ceremony.guests?.length || 0,
+
+      Kids:
+        rsvp.ceremony.kids || 0,
+
+      Dietary:
+        rsvp.ceremony.dietary?.join(", ") || "-",
+
+      Allergies:
+        rsvp.ceremony.allergiesNote || "-",
+
+      Message:
+        rsvp.message || "-",
+    }));
 
     const ws = XLSX.utils.json_to_sheet(wsData);
+
     const wb = XLSX.utils.book_new();
+
     XLSX.utils.book_append_sheet(wb, ws, "RSVPs");
 
-    const buffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
-    const blob = new Blob([buffer], { type: "application/octet-stream" });
+    const buffer = XLSX.write(wb, {
+      bookType: "xlsx",
+      type: "array",
+    });
+
+    const blob = new Blob([buffer]);
+
     saveAs(blob, "RSVP_List.xlsx");
   };
 
   /* ================= FILTER + SEARCH ================= */
+
   const filteredData = rsvps.filter((r) => {
+
+    const ceremony = r.ceremony || {};
+
     const matchesFilter =
       filter === "all" ||
-      Object.values(r.ceremonies).some((c) =>
-        filter === "yes" ? c.attending === "yes" : c.attending === "no"
-      );
+      ceremony.attending === filter;
 
-    const matchesSearch = Object.values(r.ceremonies)
-      .flatMap((c) =>
-        (c.guests || []).map((g) => {
-          if (typeof g === "string") return g;
-          if (typeof g === "object")
-            return `${g?.firstName || ""} ${g?.lastName || ""}`;
-          return "";
-        })
-      )
-      .join(" ")
-      .toLowerCase()
-      .includes(search.toLowerCase());
+    const matchesSearch =
+      (ceremony.guests || [])
+        .join(" ")
+        .toLowerCase()
+        .includes(search.toLowerCase());
 
     return matchesFilter && matchesSearch;
   });
 
   /* ================= TABLE ================= */
+
   const columns = [
-    {
-      title: "Ceremony",
-      dataIndex: "ceremonies",
-      render: (ceremonies) =>
-        Object.keys(ceremonies)
-          .map((k) => CEREMONY_NAMES[k] || k)
-          .join(" | "),
-    },
+
     {
       title: "Guests",
-      dataIndex: "ceremonies",
-      render: (ceremonies) =>
-        Object.values(ceremonies)
-          .map((c) => formatGuests(c.guests))
-          .join(" | "),
+      render: (_, record) =>
+        formatGuests(record.ceremony.guests),
     },
+
     {
       title: "Attendance",
-      dataIndex: "ceremonies",
-      render: (ceremonies) =>
-        Object.values(ceremonies).map((c, idx) =>
-          c.attending === "yes" ? (
-            <Tag color="green" key={idx}>
-              Attending
-            </Tag>
-          ) : (
-            <Tag color="red" key={idx}>
-              Not Attending
-            </Tag>
-          )
+      render: (_, record) =>
+        record.ceremony.attending === "yes" ? (
+          <Tag color="green">Attending</Tag>
+        ) : (
+          <Tag color="red">No</Tag>
         ),
     },
+
     {
       title: "Guest Count",
       render: (_, record) =>
-        Object.values(record.ceremonies)
-          .map((c) => c.guests?.length || 0)
-          .join(" | "),
+        record.ceremony.guests?.length || 0,
     },
-    { title: "Message", dataIndex: "message" },
+
+    {
+      title: "Kids",
+      render: (_, record) =>
+        record.ceremony.kids || 0,
+    },
+
+    {
+      title: "Dietary",
+      render: (_, record) =>
+        record.ceremony.dietary?.join(", ") || "-",
+    },
+
+    {
+      title: "Message",
+      dataIndex: "message",
+    },
+
     {
       title: "Action",
       render: (_, record) => (
         <div style={{ display: "flex", gap: 8 }}>
           <Button onClick={() => handleViewDetails(record)}>
-            View Details
+            View
           </Button>
 
           <Popconfirm
-            title="Are you sure you want to delete this RSVP?"
-            onConfirm={() => handleDelete(record.id)}
+            title="Delete RSVP?"
+            onConfirm={() =>
+              handleDelete(record.id)
+            }
           >
-            <Button danger type="primary">
+            <Button danger>
               Delete
             </Button>
           </Popconfirm>
@@ -238,19 +237,23 @@ const AdminDashboard = () => {
   ];
 
   /* ================= LOGIN SCREEN ================= */
+
   if (!isAuth) {
     return (
       <div style={styles.wrapper}>
         <Card title="Admin Login" style={styles.card}>
           <Input.Password
-            placeholder="Enter admin password"
+            placeholder="Password"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) =>
+              setPassword(e.target.value)
+            }
           />
+
           <Button
             type="primary"
             block
-            style={{ marginTop: 16 }}
+            style={{ marginTop: 20 }}
             onClick={handleLogin}
           >
             Login
@@ -260,31 +263,55 @@ const AdminDashboard = () => {
     );
   }
 
+  /* ================= MAIN ================= */
+
   return (
     <div style={{ padding: 20 }}>
-      <Row gutter={[16, 16]} style={{ marginBottom: 20 }}>
+
+      <Row gutter={16} style={{ marginBottom: 20 }}>
+
         <Col>
-          <Select value={filter} onChange={setFilter} style={{ width: 200 }}>
-            <Select.Option value="all">All RSVPs</Select.Option>
-            <Select.Option value="yes">Attending</Select.Option>
-            <Select.Option value="no">Not Attending</Select.Option>
+          <Select
+            value={filter}
+            onChange={setFilter}
+            style={{ width: 200 }}
+          >
+            <Select.Option value="all">
+              All
+            </Select.Option>
+
+            <Select.Option value="yes">
+              Attending
+            </Select.Option>
+
+            <Select.Option value="no">
+              Not Attending
+            </Select.Option>
+
           </Select>
         </Col>
 
         <Col>
           <Input
-            placeholder="Search by Guest Name"
+            placeholder="Search Guest"
             value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={(e) =>
+              setSearch(e.target.value)
+            }
           />
         </Col>
 
         <Col>
-          <Button type="primary" onClick={exportExcel}>
+          <Button
+            type="primary"
+            onClick={exportExcel}
+          >
             Export Excel
           </Button>
         </Col>
+
       </Row>
+
 
       <Table
         columns={columns}
@@ -293,50 +320,91 @@ const AdminDashboard = () => {
         pagination={{ pageSize: 6 }}
       />
 
+
       <Modal
         open={modalVisible}
-        title="RSVP Full Details"
-        onCancel={handleModalClose}
+        title="RSVP Details"
+        onCancel={() =>
+          setModalVisible(false)
+        }
         footer={[
-          <Button key="close" type="primary" onClick={handleModalClose}>
+          <Button
+            type="primary"
+            onClick={() =>
+              setModalVisible(false)
+            }
+          >
             Close
           </Button>,
         ]}
       >
-        {selectedRsvp &&
-          Object.entries(selectedRsvp.ceremonies).map(([cerKey, cer]) => (
-            <div key={cerKey} style={{ marginBottom: 12 }}>
-              <h4>{CEREMONY_NAMES[cerKey] || cerKey}</h4>
-              <p>
-                <strong>Attending:</strong>{" "}
-                {cer.attending === "yes" ? "Yes" : "No"}
-              </p>
-              <p>
-                <strong>Guest Count:</strong> {cer.guests?.length || 0}
-              </p>
-              <p>
-                <strong>Guests:</strong> {formatGuests(cer.guests)}
-              </p>
-            </div>
-          ))}
 
-        <p>
-          <strong>Message:</strong> {selectedRsvp?.message}
-        </p>
+        {selectedRsvp && (
+
+          <>
+
+            <p>
+              <b>Attending:</b>{" "}
+              {selectedRsvp.ceremony.attending}
+            </p>
+
+            <p>
+              <b>Guests:</b>{" "}
+              {formatGuests(
+                selectedRsvp.ceremony.guests
+              )}
+            </p>
+
+            <p>
+              <b>Kids:</b>{" "}
+              {selectedRsvp.ceremony.kids}
+            </p>
+
+            <p>
+              <b>Dietary:</b>{" "}
+              {selectedRsvp.ceremony.dietary?.join(
+                ", "
+              )}
+            </p>
+
+            <p>
+              <b>Allergies:</b>{" "}
+              {selectedRsvp.ceremony.allergiesNote ||
+                "-"}
+            </p>
+
+            <p>
+              <b>Message:</b>{" "}
+              {selectedRsvp.message}
+            </p>
+
+          </>
+
+        )}
+
       </Modal>
+
     </div>
   );
 };
 
 export default AdminDashboard;
 
+
+/* ================= STYLES ================= */
+
 const styles = {
+
   wrapper: {
     minHeight: "100vh",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    background: "#f0f2f5",
+    background: "#f5f5f5",
   },
-  card: { width: 360 },
+
+  card: {
+    width: 350,
+  },
+
 };
