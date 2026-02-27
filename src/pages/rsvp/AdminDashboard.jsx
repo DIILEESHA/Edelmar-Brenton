@@ -72,7 +72,6 @@ const AdminDashboard = () => {
       setRsvps(data);
     } catch (error) {
       message.error("Failed to fetch RSVPs");
-      console.log(error);
     }
   };
 
@@ -98,19 +97,19 @@ const AdminDashboard = () => {
       await deleteDoc(doc(db, "rsvps", id));
       message.success("Deleted successfully");
       fetchRsvps();
-    } catch (error) {
+    } catch {
       message.error("Delete failed");
     }
   };
 
-  /* ================= VIEW DETAILS ================= */
+  /* ================= VIEW ================= */
 
   const handleViewDetails = (rsvp) => {
     setSelectedRsvp(rsvp);
     setModalVisible(true);
   };
 
-  /* ================= EXPORT EXCEL ================= */
+  /* ================= EXPORT ================= */
 
   const exportExcel = () => {
     const wsData = rsvps.map((rsvp) => ({
@@ -151,10 +150,9 @@ const AdminDashboard = () => {
     saveAs(blob, "RSVP_List.xlsx");
   };
 
-  /* ================= FILTER + SEARCH ================= */
+  /* ================= FILTER ================= */
 
   const filteredData = rsvps.filter((r) => {
-
     const ceremony = r.ceremony || {};
 
     const matchesFilter =
@@ -173,7 +171,6 @@ const AdminDashboard = () => {
   /* ================= TABLE ================= */
 
   const columns = [
-
     {
       title: "Guests",
       render: (_, record) =>
@@ -211,13 +208,19 @@ const AdminDashboard = () => {
     {
       title: "Message",
       dataIndex: "message",
+      responsive: ["md"],
     },
 
     {
       title: "Action",
       render: (_, record) => (
-        <div style={{ display: "flex", gap: 8 }}>
-          <Button onClick={() => handleViewDetails(record)}>
+        <div style={{ display: "flex", gap: 6 }}>
+          <Button
+            size="small"
+            onClick={() =>
+              handleViewDetails(record)
+            }
+          >
             View
           </Button>
 
@@ -227,7 +230,7 @@ const AdminDashboard = () => {
               handleDelete(record.id)
             }
           >
-            <Button danger>
+            <Button danger size="small">
               Delete
             </Button>
           </Popconfirm>
@@ -266,15 +269,17 @@ const AdminDashboard = () => {
   /* ================= MAIN ================= */
 
   return (
-    <div style={{ padding: 20 }}>
+    <div style={styles.container}>
 
-      <Row gutter={16} style={{ marginBottom: 20 }}>
+      {/* FILTER AREA */}
 
-        <Col>
+      <Row gutter={[10, 10]} style={{ marginBottom: 15 }}>
+
+        <Col xs={24} sm={12} md={6}>
           <Select
             value={filter}
             onChange={setFilter}
-            style={{ width: 200 }}
+            style={{ width: "100%" }}
           >
             <Select.Option value="all">
               All
@@ -287,11 +292,10 @@ const AdminDashboard = () => {
             <Select.Option value="no">
               Not Attending
             </Select.Option>
-
           </Select>
         </Col>
 
-        <Col>
+        <Col xs={24} sm={12} md={8}>
           <Input
             placeholder="Search Guest"
             value={search}
@@ -301,9 +305,10 @@ const AdminDashboard = () => {
           />
         </Col>
 
-        <Col>
+        <Col xs={24} sm={24} md={6}>
           <Button
             type="primary"
+            block
             onClick={exportExcel}
           >
             Export Excel
@@ -312,14 +317,18 @@ const AdminDashboard = () => {
 
       </Row>
 
+      {/* TABLE */}
 
-      <Table
-        columns={columns}
-        dataSource={filteredData}
-        rowKey="id"
-        pagination={{ pageSize: 6 }}
-      />
+      <div style={{ overflowX: "auto" }}>
+        <Table
+          columns={columns}
+          dataSource={filteredData}
+          rowKey="id"
+          pagination={{ pageSize: 6 }}
+        />
+      </div>
 
+      {/* MODAL */}
 
       <Modal
         open={modalVisible}
@@ -327,6 +336,7 @@ const AdminDashboard = () => {
         onCancel={() =>
           setModalVisible(false)
         }
+        width={350}
         footer={[
           <Button
             type="primary"
@@ -340,9 +350,7 @@ const AdminDashboard = () => {
       >
 
         {selectedRsvp && (
-
           <>
-
             <p>
               <b>Attending:</b>{" "}
               {selectedRsvp.ceremony.attending}
@@ -364,7 +372,7 @@ const AdminDashboard = () => {
               <b>Dietary:</b>{" "}
               {selectedRsvp.ceremony.dietary?.join(
                 ", "
-              )}
+              ) || "-"}
             </p>
 
             <p>
@@ -377,9 +385,7 @@ const AdminDashboard = () => {
               <b>Message:</b>{" "}
               {selectedRsvp.message}
             </p>
-
           </>
-
         )}
 
       </Modal>
@@ -390,10 +396,15 @@ const AdminDashboard = () => {
 
 export default AdminDashboard;
 
-
 /* ================= STYLES ================= */
 
 const styles = {
+
+  container: {
+    padding: 15,
+    maxWidth: 1200,
+    margin: "auto",
+  },
 
   wrapper: {
     minHeight: "100vh",
@@ -401,10 +412,12 @@ const styles = {
     justifyContent: "center",
     alignItems: "center",
     background: "#f5f5f5",
+    padding: 15,
   },
 
   card: {
-    width: 350,
+    width: "100%",
+    maxWidth: 350,
   },
 
 };

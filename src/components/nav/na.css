@@ -33,30 +33,30 @@
   cursor: pointer;
   position: relative;
   display: inline-block;
-  padding: 5px 0;
-  transition: color 0.3s ease;
-  color: #fff; /* Default text color */
+  padding-bottom: 5px;
+  color: #fff;
+  transition: 0.3s;
 }
 
-/* Hover underline effect */
 .nav_li::after {
   content: "";
   position: absolute;
-  left: 0;
+  left: 50%;
   bottom: 0;
-  width: 0%; 
-  background-color: #fff; 
-  transition: width 0.4s ease;
-}
-
-.nav_li:hover {
-  color: #ff6b6b; /* change text color on hover */
+  width: 0%;
+  height: 2px;
+  background: #ff6b6b;
+  transition: 0.4s;
+  transform: translateX(-50%);
 }
 
 .nav_li:hover::after {
-  width: 100%; /* animate underline across text */
+  width: 100%;
 }
 
+.nav_li:hover {
+  color: #ff6b6b;
+}
 /* ---------------- Hamburger ---------------- */
 
 .hamburger {
