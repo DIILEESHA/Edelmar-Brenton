@@ -9,11 +9,12 @@ import "react-toastify/dist/ReactToastify.css";
 const Rsvps = () => {
   const [ceremony, setCeremony] = useState({
     attending: "", // yes / no
+    guestName: "", // main guest name
     guestCount: "1",
     guests: [""],
     kids: "0",
     dietary: [], // gluten-free, vegetarian, allergies
-    allergiesNote: "", // New field for allergy details
+    allergiesNote: "",
   });
 
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const Rsvps = () => {
 
   const [errors, setErrors] = useState({});
 
-  // Handle attendance, guest count, kids, dietary, allergiesNote
+  // Handle ceremony fields
   const handleCeremonyChange = (field, value) => {
     let updated = { ...ceremony, [field]: value };
 
@@ -38,25 +39,27 @@ const Rsvps = () => {
 
     if (field === "dietary") {
       updated.dietary = value;
-      // If Allergies unchecked, clear allergiesNote
       if (!value.includes("Allergies")) updated.allergiesNote = "";
     }
 
     setCeremony(updated);
   };
 
+  // Handle guest names for attending guests
   const handleGuestChange = (index, value) => {
     const updatedGuests = [...ceremony.guests];
     updatedGuests[index] = value;
     setCeremony((prev) => ({ ...prev, guests: updatedGuests }));
   };
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+  // Handle main guest name
+  const handleGuestNameChange = (e) => {
+    setCeremony((prev) => ({ ...prev, guestName: e.target.value }));
   };
 
-  const handleAllergiesNoteChange = (e) => {
-    setCeremony((prev) => ({ ...prev, allergiesNote: e.target.value }));
+  // Handle text message
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleDietaryChange = (e) => {
@@ -64,6 +67,7 @@ const Rsvps = () => {
     let updated = [...ceremony.dietary];
     if (checked) updated.push(value);
     else updated = updated.filter((item) => item !== value);
+
     setCeremony((prev) => ({
       ...prev,
       dietary: updated,
@@ -71,9 +75,17 @@ const Rsvps = () => {
     }));
   };
 
-  // Validate RSVP
+  const handleAllergiesNoteChange = (e) => {
+    setCeremony((prev) => ({ ...prev, allergiesNote: e.target.value }));
+  };
+
+  // Validate form
   const validate = () => {
     let newErrors = {};
+
+    if (!ceremony.guestName.trim()) {
+      newErrors.guestName = "Please enter your name";
+    }
 
     if (!ceremony.attending) {
       newErrors.general = "Please select attendance for the wedding ceremony";
@@ -89,6 +101,7 @@ const Rsvps = () => {
     return Object.keys(newErrors).length === 0;
   };
 
+  // Submit RSVP
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validate()) return;
@@ -105,6 +118,7 @@ const Rsvps = () => {
       // Reset form
       setCeremony({
         attending: "",
+        guestName: "",
         guestCount: "1",
         guests: [""],
         kids: "0",
@@ -139,6 +153,19 @@ const Rsvps = () => {
       </p>
 
       <form className="rs_form" onSubmit={handleSubmit}>
+        {/* Guest Name */}
+        <div className="form_input_section">
+          <label>Your Name</label>
+          <input
+            type="text"
+            className="form_input"
+            value={ceremony.guestName}
+            onChange={handleGuestNameChange}
+            placeholder="Enter your full name"
+          />
+          {errors.guestName && <span className="error">{errors.guestName}</span>}
+        </div>
+
         {/* Attendance */}
         <div className="ceremony_section">
           <div className="form_input_section">
@@ -156,9 +183,9 @@ const Rsvps = () => {
             </select>
           </div>
 
-          {/* Guest Count & Names */}
           {ceremony.attending === "yes" && (
             <>
+              {/* Guest Count & Names */}
               <div className="form_input_section">
                 <label>Number of Guests (including yourself)</label>
                 <select
@@ -191,7 +218,7 @@ const Rsvps = () => {
                 </div>
               ))}
 
-              {/* Kids attending */}
+              {/* Kids */}
               <div className="form_input_section">
                 <label>Number of Kids Attending</label>
                 <select
@@ -207,7 +234,7 @@ const Rsvps = () => {
                 </select>
               </div>
 
-              {/* Dietary Preferences */}
+              {/* Dietary */}
               <div className="form_input_section">
                 <label>Dietary Preferences</label>
                 <div
@@ -227,7 +254,7 @@ const Rsvps = () => {
                   ))}
                 </div>
 
-                {/* Allergies Note Input */}
+                {/* Allergies Note */}
                 {ceremony.dietary.includes("Allergies") && (
                   <div className="form_input_section">
                     <label>Please specify your allergies</label>
