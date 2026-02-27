@@ -11,7 +11,6 @@ import Header from "../header/Header";
 const Reccomondation = () => {
   return (
     <div className="re_wrapper">
-      <Nav />
       <Header title="Recommendations" />
 
       {/* Title Section */}

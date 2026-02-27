@@ -81,7 +81,7 @@ const Vendor = () => {
             </p>
 
             <button className="vendor_btn">
-              <a href="https://www.weerayutjanthai.com/about">See Their Work</a>
+              <a href="https://www.instagram.com/kohsamuievents">See Their Work</a>
             </button>
           </div>
 

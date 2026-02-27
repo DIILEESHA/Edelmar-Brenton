@@ -7,9 +7,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Rsvps = () => {
-  const [ceremonies, setCeremonies] = useState({
-    ceremonyOne: { attending: "", guestCount: "1", guests: [] },
-    ceremonyTwo: { attending: "", guestCount: "1", guests: [] },
+  const [ceremony, setCeremony] = useState({
+    attending: "", // yes / no
+    guestCount: "1",
+    guests: [""],
+    kids: "0",
+    dietary: [], // gluten-free, vegetarian, allergies
+    allergiesNote: "", // New field for allergy details
   });
 
   const [formData, setFormData] = useState({
@@ -18,54 +22,67 @@ const Rsvps = () => {
 
   const [errors, setErrors] = useState({});
 
-  const handleCeremonyChange = (ceremony, field, value) => {
-    setCeremonies((prev) => {
-      let updated = { ...prev[ceremony], [field]: value };
+  // Handle attendance, guest count, kids, dietary, allergiesNote
+  const handleCeremonyChange = (field, value) => {
+    let updated = { ...ceremony, [field]: value };
 
-      // Initialize guests array when attending "yes" or guestCount changes
-      if (field === "attending" && value === "yes") {
-        const num = parseInt(prev[ceremony].guestCount) || 1;
-        updated.guests = Array(num).fill("");
-      }
+    if (field === "attending" && value === "yes") {
+      const num = parseInt(ceremony.guestCount) || 1;
+      updated.guests = Array(num).fill("");
+    }
 
-      if (field === "guestCount") {
-        const num = parseInt(value) || 1;
-        updated.guests = Array(num).fill("");
-      }
+    if (field === "guestCount") {
+      const num = parseInt(value) || 1;
+      updated.guests = Array(num).fill("");
+    }
 
-      return { ...prev, [ceremony]: updated };
-    });
+    if (field === "dietary") {
+      updated.dietary = value;
+      // If Allergies unchecked, clear allergiesNote
+      if (!value.includes("Allergies")) updated.allergiesNote = "";
+    }
+
+    setCeremony(updated);
   };
 
-  const handleGuestChange = (ceremony, index, value) => {
-    const updatedGuests = [...ceremonies[ceremony].guests];
+  const handleGuestChange = (index, value) => {
+    const updatedGuests = [...ceremony.guests];
     updatedGuests[index] = value;
-    setCeremonies((prev) => ({
-      ...prev,
-      [ceremony]: { ...prev[ceremony], guests: updatedGuests },
-    }));
+    setCeremony((prev) => ({ ...prev, guests: updatedGuests }));
   };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleAllergiesNoteChange = (e) => {
+    setCeremony((prev) => ({ ...prev, allergiesNote: e.target.value }));
+  };
+
+  const handleDietaryChange = (e) => {
+    const { value, checked } = e.target;
+    let updated = [...ceremony.dietary];
+    if (checked) updated.push(value);
+    else updated = updated.filter((item) => item !== value);
+    setCeremony((prev) => ({
+      ...prev,
+      dietary: updated,
+      allergiesNote: updated.includes("Allergies") ? prev.allergiesNote : "",
+    }));
+  };
+
+  // Validate RSVP
   const validate = () => {
     let newErrors = {};
 
-    Object.keys(ceremonies).forEach((cer) => {
-      const c = ceremonies[cer];
-      if (c.attending === "yes") {
-        c.guests.forEach((guest, idx) => {
-          if (!guest.trim()) {
-            newErrors[`${cer}-guest-${idx}`] = "Guest name required";
-          }
-        });
-      }
-    });
-
-    if (!ceremonies.ceremonyOne.attending && !ceremonies.ceremonyTwo.attending) {
-      newErrors.general = "Please select attendance for at least one ceremony";
+    if (!ceremony.attending) {
+      newErrors.general = "Please select attendance for the wedding ceremony";
+    } else if (ceremony.attending === "yes") {
+      ceremony.guests.forEach((guest, idx) => {
+        if (!guest.trim()) {
+          newErrors[`guest-${idx}`] = "Guest name required";
+        }
+      });
     }
 
     setErrors(newErrors);
@@ -78,18 +95,22 @@ const Rsvps = () => {
 
     try {
       await addDoc(collection(db, "rsvps"), {
-        ceremonies,
+        ceremony,
         message: formData.message,
         createdAt: Timestamp.now(),
       });
 
       toast.success("RSVP submitted successfully");
 
-      setCeremonies({
-        ceremonyOne: { attending: "", guestCount: "1", guests: [] },
-        ceremonyTwo: { attending: "", guestCount: "1", guests: [] },
+      // Reset form
+      setCeremony({
+        attending: "",
+        guestCount: "1",
+        guests: [""],
+        kids: "0",
+        dietary: [],
+        allergiesNote: "",
       });
-
       setFormData({ message: "" });
       setErrors({});
     } catch {
@@ -97,59 +118,8 @@ const Rsvps = () => {
     }
   };
 
-  const renderCeremony = (ceremony, label) => (
-    <div className="ceremony_section">
-      <div className="form_input_section">
-        <label>{label}</label>
-        <select
-          className="form_input"
-          value={ceremonies[ceremony].attending}
-          onChange={(e) => handleCeremonyChange(ceremony, "attending", e.target.value)}
-        >
-          <option value="">Please select</option>
-          <option value="yes">Will attend</option>
-          <option value="no">Will not attend</option>
-        </select>
-      </div>
-
-      {ceremonies[ceremony].attending === "yes" && (
-        <>
-          <div className="form_input_section">
-            <label>Number of Guests</label>
-            <select
-              className="form_input"
-              value={ceremonies[ceremony].guestCount}
-              onChange={(e) => handleCeremonyChange(ceremony, "guestCount", e.target.value)}
-            >
-              {[...Array(10)].map((_, i) => (
-                <option key={i + 1} value={i + 1}>
-                  {i + 1}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          {ceremonies[ceremony].guests.map((guest, idx) => (
-            <div className="form_input_section" key={`${ceremony}-guest-${idx}`}>
-              <input
-                type="text"
-                className="form_input"
-                placeholder={`Guest ${idx + 1} Name`}
-                value={guest}
-                onChange={(e) => handleGuestChange(ceremony, idx, e.target.value)}
-              />
-              {errors[`${ceremony}-guest-${idx}`] && (
-                <span className="error">{errors[`${ceremony}-guest-${idx}`]}</span>
-              )}
-            </div>
-          ))}
-        </>
-      )}
-    </div>
-  );
-
   return (
-    <div className="rsvp">
+    <div className="rsvp tropical_theme">
       <ToastContainer position="top-center" />
 
       <div className="breadcrumb">
@@ -162,17 +132,124 @@ const Rsvps = () => {
 
       <h2 className="rs_title">Kindly Respond</h2>
       <p className="rs_para">
-        Please let us know if you will be joining us by <strong>June 11, 2026</strong>.
+        Please let us know if you will be joining the wedding of{" "}
+        <strong>Mr. John Edelmar Barcena & Mr. Brenton-Glenn Bradbrook</strong>{" "}
+        on <strong>14th March 2028</strong> at{" "}
+        <strong>Sun Deck, Silavadee Pool Spa Resort</strong>.
       </p>
 
       <form className="rs_form" onSubmit={handleSubmit}>
-        {renderCeremony("ceremonyOne", "Sikh Ceremony")}
-        {renderCeremony("ceremonyTwo", "Orthodox Ceremony")}
+        {/* Attendance */}
+        <div className="ceremony_section">
+          <div className="form_input_section">
+            <label>Will you attend the wedding ceremony?</label>
+            <select
+              className="form_input"
+              value={ceremony.attending}
+              onChange={(e) =>
+                handleCeremonyChange("attending", e.target.value)
+              }
+            >
+              <option value="">Please select</option>
+              <option value="yes">Yes, I will attend</option>
+              <option value="no">No, I cannot attend</option>
+            </select>
+          </div>
+
+          {/* Guest Count & Names */}
+          {ceremony.attending === "yes" && (
+            <>
+              <div className="form_input_section">
+                <label>Number of Guests (including yourself)</label>
+                <select
+                  className="form_input"
+                  value={ceremony.guestCount}
+                  onChange={(e) =>
+                    handleCeremonyChange("guestCount", e.target.value)
+                  }
+                >
+                  {[...Array(10)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>
+                      {i + 1}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {ceremony.guests.map((guest, idx) => (
+                <div className="form_input_section" key={idx}>
+                  <input
+                    type="text"
+                    className="form_input"
+                    placeholder={`Guest ${idx + 1} Name`}
+                    value={guest}
+                    onChange={(e) => handleGuestChange(idx, e.target.value)}
+                  />
+                  {errors[`guest-${idx}`] && (
+                    <span className="error">{errors[`guest-${idx}`]}</span>
+                  )}
+                </div>
+              ))}
+
+              {/* Kids attending */}
+              <div className="form_input_section">
+                <label>Number of Kids Attending</label>
+                <select
+                  className="form_input"
+                  value={ceremony.kids}
+                  onChange={(e) => handleCeremonyChange("kids", e.target.value)}
+                >
+                  {[...Array(6)].map((_, i) => (
+                    <option key={i} value={i}>
+                      {i}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Dietary Preferences */}
+              <div className="form_input_section">
+                <label>Dietary Preferences</label>
+                <div
+                  className="checkbox_group"
+                  style={{ display: "flex", flexDirection: "column", gap: "10px" }}
+                >
+                  {["Gluten-Free", "Vegetarian", "Allergies"].map((diet) => (
+                    <label key={diet} className="diet_label">
+                      <input
+                        type="checkbox"
+                        value={diet}
+                        checked={ceremony.dietary.includes(diet)}
+                        onChange={handleDietaryChange}
+                      />
+                      {diet}
+                    </label>
+                  ))}
+                </div>
+
+                {/* Allergies Note Input */}
+                {ceremony.dietary.includes("Allergies") && (
+                  <div className="form_input_section">
+                    <label>Please specify your allergies</label>
+                    <input
+                      type="text"
+                      className="form_input"
+                      value={ceremony.allergiesNote}
+                      onChange={handleAllergiesNoteChange}
+                      placeholder="E.g., peanuts, shellfish, gluten"
+                    />
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+        </div>
 
         {errors.general && <span className="error">{errors.general}</span>}
 
+        {/* Message */}
         <div className="form_input_section">
-          <label>Message for Jaslene & Mišel</label>
+          <label>Message / Wishes for the couple</label>
           <textarea
             name="message"
             value={formData.message}

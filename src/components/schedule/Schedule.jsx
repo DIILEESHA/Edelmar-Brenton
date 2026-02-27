@@ -37,7 +37,6 @@ const Schedule = () => {
           </div>
         </div>
 
-
         {/* RIGHT DETAILS */}
         <div className="sc_sub">
 
@@ -87,7 +86,6 @@ const Schedule = () => {
 
       </div>
 
-
       <br />
       <br />
       <br />
@@ -99,10 +97,8 @@ const Schedule = () => {
       <br />
       <br />
 
-
       {/* ================= RECEPTION ================= */}
       <div className="sc_grid muda">
-
 
         {/* LEFT DETAILS */}
         <div className="sc_sub gio">
@@ -134,14 +130,6 @@ const Schedule = () => {
             <br />
 
             <div className="detail_item mo gio">
-              <img src={cok} alt="Celebration" className="jo" />
-              <h3 className="nb">Evening Celebration</h3>
-              <h2 className="in_time">10:15 PM</h2>
-            </div>
-
-            <br />
-
-            <div className="detail_item mo gio">
               <img src="https://cdn-icons-png.flaticon.com/128/2706/2706094.png" alt="Finish" className="jo" />
               <h3 className="nb">Wedding Concludes</h3>
               <h2 className="in_time">10:30 PM</h2>
@@ -150,7 +138,6 @@ const Schedule = () => {
           </div>
 
         </div>
-
 
         {/* RIGHT TITLE */}
         <div className="sc_sub">

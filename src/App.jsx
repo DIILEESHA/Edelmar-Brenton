@@ -23,13 +23,16 @@ import Welcome from "./components/welcome/Welcome";
 import Story from "./components/story/Story";
 import Vgallery from "./pages/gallery/Vgallery";
 import All from "./pages/vendors/All";
+import QRCodeComponent from "./components/header/QRCodeComponent";
 const Home = () => {
   return (
     <>
       <Header title="March 14 2028 | Koh Samui, Thailand 🌴" />
-      <Welcome para="Welcome to our wedding website! We’re so excited to celebrate this next
+      <Welcome
+        para="Welcome to our wedding website! We’re so excited to celebrate this next
         chapter with you. Here you’ll find all the details for our big day, and
-        we can’t wait to share these moments with you!" />
+        we can’t wait to share these moments with you!"
+      />
       <Invite />
       <Count />
       {/* <Schedule /> */}
@@ -40,7 +43,7 @@ const Home = () => {
       {/* <Dress /> */}
       <Story />
       <Vgallery />
-      <h2 className="ooters">Jaslene & Mišel © All Rights Reserved</h2>
+      <h2 className="ooters">Edelmar & Brenton © All Rights Reserved</h2>
     </>
   );
 };

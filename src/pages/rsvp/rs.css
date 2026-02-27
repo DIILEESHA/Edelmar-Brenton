@@ -30,7 +30,7 @@
 
 /* ---------------- RSVP SECTION ---------------- */
 .rsvp {
-  background-image: url("../../assets/us.jpg");
+  background-image: url("../../assets/us33.jpg");
   min-height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
@@ -121,7 +121,7 @@
 }
 
 .rs_form {
-  background-color: rgba(255, 255, 255, 0.95);
+  background-color: rgba(255, 255, 255, 0.724);
   padding: 50px 60px;
   border-radius: 20px;
   display: flex;
@@ -153,7 +153,7 @@
 .form_textarea {
   padding: 14px 16px;
   border-radius: 8px;
-  border: 1px solid #ccc;
+  border: 1px solid #838080;
   font-family: "bodini";
   font-size: 17px;
 }

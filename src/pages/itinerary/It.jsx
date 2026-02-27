@@ -9,7 +9,8 @@ const It = () => {
       <Header title="Wedding Day Itinerary" />
       <Schedule />
       <Dress />
-      <h2 className="ooters">Jaslene & Mišel © All Rights Reserved</h2>
+      <h2 className="ooters">Edelmar & Brenton © All Rights Reserved</h2>
+
     </div>
   );
 };

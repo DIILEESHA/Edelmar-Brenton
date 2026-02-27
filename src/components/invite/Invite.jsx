@@ -1,5 +1,5 @@
 import "./in.css";
-import couplePhoto from "../../assets/us33.jpg"; // Replace with your couple photo
+import couplePhoto from "../../assets/us33.jpg"; // Couple photo
 import cers from "../../assets/cer.png"; // Ceremony icon
 import recs from "../../assets/rec.png"; // Reception icon
 
@@ -12,7 +12,7 @@ const Invite = () => {
           <div className="">
             <img
               src={couplePhoto}
-              alt="Edel and [Partner Name]"
+              alt="John and Brenton-Glenn"
               className="in_img"
             />
           </div>
@@ -22,34 +22,26 @@ const Invite = () => {
         <div className="in_sub text_content">
           <h4 className="top_invite_text">You're Invited</h4>
 
-          <p className="bible_verse">
-            “They are not said to be husband and wife, who merely sit
-            together. They alone are called husband and wife, who have one
-            light in two bodies.”
-            <br />
-            <span>— Guru Amar Das, Ang 788</span>
-            <br />
-            <br />
-          </p>
+         
 
           {/* Couple Names */}
-          <h2 className="names_title">Edel & [Partner Name]</h2>
+          <h2 className="names_title">John Edelmar Barcena & Brenton-Glenn Bradbrook</h2>
           <p className="invite_msg">invite you to celebrate their wedding</p>
 
           {/* Wedding Details Section */}
           <div className="details_section">
             {/* Ceremony */}
             <div className="detail_item maj">
-              <img src={cers} alt="" className="jo" />
+              <img src={cers} alt="Ceremony Icon" className="jo" />
               <br />
-              <h3 className="nb">Beach Ceremony</h3>
+              <h3 className="nb">Ceremony at Sun Deck</h3>
               <h2 className="in_time">4:30 PM</h2>
               <p className="aa">
                 14th March 2028
                 <br />
                 Silavadee Pool Spa Resort,
-                <br/>
-                 Koh Samui, Thailand
+                <br />
+                Koh Samui, Thailand
               </p>
               <p className="address">
                 <a
@@ -65,16 +57,16 @@ const Invite = () => {
 
             {/* Reception */}
             <div className="detail_item maj">
-              <img src={recs} alt="" className="jo" />
+              <img src={recs} alt="Reception Icon" className="jo" />
               <br />
-              <h3 className="nb">Reception & Dinner</h3>
+              <h3 className="nb">Reception & Dinner at Sun Lounge</h3>
               <h2 className="in_time">6:30 PM</h2>
               <p className="aa">
                 14th March 2028
                 <br />
-                Pool Deck & Restaurant, 
+                Sun Lounge, Silavadee Pool Spa Resort,
                 <br/>
-                Silavadee Pool Spa Resort
+                Koh Samui, Thailand
               </p>
               <p className="address">
                 <a
